@@ -1,0 +1,47 @@
+﻿@model Tuple<List<StarProgrammerExtensionLibrary.Models.User>, bool, bool>
+
+@{
+    ViewBag.Title = "AreTwoObjectsEqual";
+}
+
+<h2>AreTwoObjectsEqual</h2>
+
+<div class="jumbotron">
+    These objects are @if (!Model.Item2) { <span>NOT</span> } equal!
+
+    <h3>User object:</h3>
+    <p>
+        Type: @Model.Item1[0].GetType()<br />
+        Id: @Model.Item1[0].Id<br />
+        UserName: @Model.Item1[0].Username<br />
+        Email: @Model.Item1[0].Email
+    </p>
+    <h3>User2 object:</h3>
+    <p>
+        Type: @Model.Item1[1].GetType()<br />
+        Id: @Model.Item1[1].Id<br />
+        UserName: @Model.Item1[1].Username<br />
+        Email: @Model.Item1[1].Email
+    </p>
+</div>
+
+<div class="jumbotron">
+    These objects are @if (!Model.Item3) { <span>NOT</span> } equal!
+
+    <h3>User object:</h3>
+    <p>
+        Type: @Model.Item1[0].GetType()<br />
+        Id: @Model.Item1[0].Id<br />
+        UserName: @Model.Item1[0].Username<br />
+        Email: @Model.Item1[0].Email
+    </p>
+    <h3>User2 object:</h3>
+    <p>
+        Type: @Model.Item1[2].GetType()<br />
+        Id: @Model.Item1[2].Id<br />
+        UserName: @Model.Item1[2].Username<br />
+        Email: @Model.Item1[2].Email
+    </p>
+</div>
+
+

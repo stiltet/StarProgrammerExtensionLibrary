@@ -1,0 +1,41 @@
+﻿@model StarProgrammerExtensionLibrary.ViewModels.IndexViewModel
+
+@{
+    ViewBag.Title = "Home";
+}
+
+@if (Model.MissingOrFaultyControllerActions.Any())
+{
+    <div class="error">
+        <h3>Error!</h3>
+        <p>The following extension methods have either missing controller action or the action have a faulty name:</p>
+        <ul>
+            @foreach (var item in Model.MissingOrFaultyControllerActions)
+            {
+                <li>@item.Key/@item.Value</li>
+            }
+        </ul>
+    </div>
+}
+
+<h3>List of all extension methods in the project:</h3>
+
+@foreach (var controllerLinkPath in Model.ClassesAndMethodsInProjectAsKeyValuePairs
+                                    .GroupBy(x => x.Key)
+                                    .Select(y => y.First())
+                                    .ToList()
+                                    .Select(uniqueController => uniqueController.Key)
+                                    .Select(controller => controller.Replace("Controller", "")))
+{
+    <a href="~/Extensions/@controllerLinkPath/Index">
+        <h3>@controllerLinkPath Extensions</h3>
+    </a>
+    <ul>
+        @foreach (var method in Model.ClassesAndMethodsInProjectAsKeyValuePairs.Where(x => x.Key.Contains(controllerLinkPath) && x.Value != "Index").Select(x => x.Value))
+        {
+            <li>
+                <a href="~/Extensions/@controllerLinkPath/@method">@controllerLinkPath/@method</a>
+            </li>
+        }
+    </ul>
+}

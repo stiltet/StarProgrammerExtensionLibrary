@@ -1,0 +1,27 @@
+﻿@model Tuple<StarProgrammerExtensionLibrary.Models.User, StarProgrammerExtensionLibrary.Models.UserHistory>
+
+@{
+    ViewBag.Title = "ConvertToHistoryObject";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="jumbotron">
+    <h3>User object:</h3>
+    <p>
+        Type: @Model.Item1.GetType()<br/>
+        Id: @Model.Item1.Id<br/>
+        UserName: @Model.Item1.Username<br/>
+        Email: @Model.Item1.Email
+    </p>
+    <h3>UserHistory object:</h3>
+    <p>
+        Type: @Model.Item2.GetType()<br/>
+        Id: @Model.Item2.Id<br/>
+        UserId: @Model.Item2.UserId<br/>
+        UserName: @Model.Item2.Username<br/>
+        Email: @Model.Item2.Email<br/>
+        HistoryDate: @Model.Item2.HistoryDate
+    </p>
+</div>
+

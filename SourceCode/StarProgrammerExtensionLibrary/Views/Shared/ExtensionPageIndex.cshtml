@@ -1,0 +1,22 @@
+﻿@model List<KeyValuePair<string, string>>
+
+@if (null != Model)
+{
+    foreach (var controller in Model.GroupBy(x => x.Key).Select(y => y.First()).ToList().Select(uniqueController => uniqueController.Key))
+    {
+        var controllerLinkPath = controller.Replace("Controller", "");
+        ViewBag.Title = string.Format("{0} Extensions", controllerLinkPath);
+        <h3>List of all extension methods in @controller.</h3>
+        <ul>
+            @foreach (var method in Model.Where(x => x.Key.Contains(controllerLinkPath) && x.Value != "Index").Select(x => x.Value))
+            {
+                <li><a href="~/Extensions/@controllerLinkPath/@method">@controllerLinkPath/@method</a></li>
+            }
+        </ul>
+    }
+}
+else
+{
+    <h1>Error!</h1>
+    <h3>No model is sent to view!</h3>
+}

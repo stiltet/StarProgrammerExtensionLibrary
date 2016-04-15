@@ -1,5 +1,5 @@
 # What is this?
-Star Programmer Extension Library is a C# extension library for simplyfy your daily work. It's lightweight, easy and completely open source and free to use, both  for comercial and private purposes.
+Star Programmer Extension Library is a C# extension library for simplyfy your daily work. It's lightweight, easy and completely open source and free to use, both  for comercial and personal purposes.
 
 # How do I use it?
 1. First of, clone the repo to your computer or download it as a archive.

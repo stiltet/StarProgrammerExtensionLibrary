@@ -87,6 +87,19 @@ namespace StarProgrammerExtensionLibrary.Tests.ExtensionTests
             Assert.IsTrue(result);
         }
 
+        [TestMethod]
+        public void AreTwoObjectsEqualWhenOldObjectHasANullValueButPropertyNameExistsInListToIgnoreNullValues()
+        {
+            var user = GetListOfUserObjects().First(x => x.Username == null);
+            var user2 = GetListOfUserObjects().First();
+            var ignoreNullValuesOfTheseProperties = new List<string> {"Username"};
+
+            var result = ObjectExtensions.AreTwoObjectsEqual(user2, user, new List<string>(),
+                ignoreNullValuesOfTheseProperties);
+
+            Assert.IsTrue(result);
+        }
+
         #endregion
 
         private static IEnumerable<User> GetListOfUserObjects()

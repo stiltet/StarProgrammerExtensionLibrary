@@ -29,13 +29,28 @@ namespace StarProgrammerExtensionLibrary.Controllers.Extensions
                     Id = new Guid("99F69AE0-2181-40EF-82A9-A8F5CC8E7144"),
                     Email = "test@test.com",
                     Username = "Test"
+                },
+                new User
+                {
+                    Id = new Guid("99F69AE0-2181-40EF-82A9-A8F5CC8E7144"),
+                    Email = null,
+                    Username = "Test"
                 }
             };
 
-            var areTwoObjectsEqual = ObjectExtensions.AreTwoObjectsEqual(users[0], users[1]);
-            var areTwoObjectsEqual2 = ObjectExtensions.AreTwoObjectsEqual(users[0], users[2]);
+            var ignoreList = new List<string> {"Username"};
+            var ignoreNullValuesList = new List<string> {"Email"};
 
-            return View(new Tuple<List<User>, bool, bool>(users, areTwoObjectsEqual, areTwoObjectsEqual2));
+            var areTwoObjectsEqual = ObjectExtensions.AreTwoObjectsEqual(users[0], users[2]);
+            var areTwoDifferentObjectsEqual = ObjectExtensions.AreTwoObjectsEqual(users[0], users[1]);
+            var areTwoObjectsEqualWhenUsingIgnoreList = ObjectExtensions.AreTwoObjectsEqual(users[0], users[1],
+                ignoreList);
+            var areTwoObjectsEqualWhenNotUsingIgnoreNullValuesList = ObjectExtensions.AreTwoObjectsEqual(users[0],
+                users[3]);
+            var areTwoObjectsEqualWhenUsingIgnoreNullValuesList = ObjectExtensions.AreTwoObjectsEqual(users[0], users[3],
+                null, ignoreNullValuesList);
+
+            return View(new Tuple<List<User>, bool, bool>(users, areTwoObjectsEqual, areTwoDifferentObjectsEqual));
         }
 
         public ActionResult ConvertToHistoryObject()

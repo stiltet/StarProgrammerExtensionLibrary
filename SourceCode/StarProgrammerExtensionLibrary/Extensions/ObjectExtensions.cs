@@ -12,7 +12,6 @@ namespace StarProgrammerExtensionLibrary.Extensions
         public static bool AreTwoObjectsEqual<T>(
             T newObject,
             T oldObject,
-            //bool ignoreNullValues = false,
             List<string> ignoreList = null,
             List<string> ignoreNullValuesOfTheseProperties = null)
         {
@@ -26,10 +25,8 @@ namespace StarProgrammerExtensionLibrary.Extensions
                 null != x.SetMethod).ToArray();
 
             if (null != ignoreList)
-            {
                 newObjectProperties = ignoreList.Aggregate(newObjectProperties,
                     (current, str) => current.Where(x => !x.Name.Contains(str)).ToArray());
-            }
 
             var newObjectDictionary = newObjectProperties.ToDictionary(pName => pName.Name,
                 pValue => pValue.GetValue(newObject, null));
@@ -38,42 +35,26 @@ namespace StarProgrammerExtensionLibrary.Extensions
             var oldObjectDictionary = oldObjectProperties.ToDictionary(pName => pName.Name,
                 pValue => pValue.GetValue(oldObject, null));
 
-            var areTwoObjectsEqual = true;
-
-            foreach (var item in newObjectDictionary.Keys)
-            {
-                if (null != ignoreNullValuesOfTheseProperties && null == newObjectDictionary[item] &&
-                    ignoreNullValuesOfTheseProperties.Contains(item))
-                {
-                    continue;
-                }
-                if (ArePropertiesDifferent(newObjectDictionary[item], oldObjectDictionary[item]))
-                {
-                    areTwoObjectsEqual = false;
-                    break;
-                }
-            }
-            return areTwoObjectsEqual;
-
-            //return
-            //newObjectDictionary.Keys.Where(item => !ignoreNullValues || null != newObjectDictionary[item])
-            //    .All(item => !ArePropertiesDifferent(newObjectDictionary[item], oldObjectDictionary[item]));
-
-            //return newObjectDictionary.Keys.Where(item =>
-            //    null == propertiesThatCanNotBeUpdatedToNull ||
-            //    null != newObjectDictionary[item] ||
-            //    !propertiesThatCanNotBeUpdatedToNull.Contains(item)).All(item => !ArePropertiesDifferent(
-            //        newObjectDictionary[item],
-            //        oldObjectDictionary[item]));
+            return
+                newObjectDictionary.Keys.Where(
+                    item =>
+                        (null != newObjectDictionary[item] && null != oldObjectDictionary[item]) 
+                        || null == ignoreNullValuesOfTheseProperties 
+                        || !ignoreNullValuesOfTheseProperties.Contains(item))
+                    .All(item => !AreTwoObjectPropertiesDifferent(newObjectDictionary[item], oldObjectDictionary[item]));
         }
 
-        private static bool ArePropertiesDifferent(object newItem, object oldItem)
+        public static bool AreTwoObjectPropertiesDifferent(
+            object newItem, 
+            object oldItem)
         {
             return null == newItem && null != oldItem ||
                    null != newItem && !newItem.Equals(oldItem);
         }
 
-        public static object ConvertToHistoryObject<T>(T baseObject, string baseObjectAsString,
+        public static object ConvertToHistoryObject<T>(
+            T baseObject, 
+            string baseObjectAsString,
             bool addHistoryValues = true)
         {
             var historyObject =

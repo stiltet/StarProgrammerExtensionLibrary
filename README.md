@@ -45,7 +45,9 @@ public static bool AreTwoObjectsEqual<T>(
                 (null != newObjectDictionary[item] && null != oldObjectDictionary[item]) 
                 || null == ignoreNullValuesOfTheseProperties 
                 || !ignoreNullValuesOfTheseProperties.Contains(item))
-            .All(item => !AreTwoObjectPropertiesDifferent(newObjectDictionary[item], oldObjectDictionary[item]));
+            .All(item => !AreTwoObjectPropertiesDifferent(
+                             newObjectDictionary[item], 
+                             oldObjectDictionary[item]));
 }
 
 public static bool AreTwoObjectPropertiesDifferent(
@@ -101,7 +103,8 @@ var areTwoObjectsEqualWhenUsingIgnoreList =
     ObjectExtensions.AreTwoObjectsEqual(users[0], users[1], ignoreList);
 
 //Will return false.
-var areTwoObjectsEqualWhenNotUsingIgnoreNullValuesList = ObjectExtensions.AreTwoObjectsEqual(users[0], users[3]);
+var areTwoObjectsEqualWhenNotUsingIgnoreNullValuesList = 
+    ObjectExtensions.AreTwoObjectsEqual(users[0], users[3]);
 
 //Will return true.
 var areTwoObjectsEqualWhenUsingIgnoreNullValuesList = 
